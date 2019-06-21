@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<script>
+var MyModules=(function Manager() {
+  var module={}
+  function define (name,deps,impl) {
+    for(var i=0;i<deps.length;i++){
+      deps[i]=module[deps[i]]
+    }
+    module[name]=impl.apply(impl,deps)
+  }
+  function get (name) {
+    return module[name]
+  }
+  return {
+    define,
+    get,
+    module
+  }
+})()
+  MyModules.define('bar',[],function () {
+    function hello (who) {
+      return 'Let me introduce:'+who
+    }
+    return {
+      hello
+    }
+  })
+  MyModules.define('foo',['bar'],function (bar) {
+    var hungry='hippo'
+    function awesome () {
+      console.log(bar.hello(hungry).toUpperCase())
+    }
+    return{
+      awesome
+    }
+  })
+  console.log(MyModules.module)
+  var bar=MyModules.get('bar')
+  var foo=MyModules.get('foo')
+  console.log(bar.hello('hippo'))
+  foo.awesome()
+</script>
+</body>
+</html>
