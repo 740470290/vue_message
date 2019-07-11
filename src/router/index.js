@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
-import Register from '@/components/Register'
-import Login from '@/components/Login'
+// import Register from '@/components/Register'
+// import Login from '@/components/Login'
 import Test from '@/components/Test'
 
+const Login = () => import('@/components/Login')
+const Register = () => import('@/components/Register')
 Vue.use(Router)
 const User = {
   props: ['query'],
